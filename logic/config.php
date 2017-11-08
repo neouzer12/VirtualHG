@@ -1,4 +1,5 @@
 <?php
+    //Set your own enviroment variables here.
     $server = "localhost";
     $db_username = "root";
     $db_password = "";

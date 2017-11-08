@@ -139,7 +139,12 @@
                 usr, pwd
             }, function(data){
                 var response = jQuery.parseJSON(data);
-                console.log(data);
+                if(response.status == 0){
+                    window.location = "home";
+                }else{
+                    $("#usr").addClass("is-invalid")
+                    $("#pwd").addClass("is-invalid")
+                }
             })
         });
     </script>

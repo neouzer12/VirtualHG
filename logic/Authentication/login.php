@@ -8,7 +8,6 @@
 
     $query = "SELECT * FROM users WHERE usr='$username' AND pwd='$password' LIMIT 1";
 
-    //TODO: LOGIN
     $result = $conn->query($query);
 
     if ($result->num_rows == 1){
