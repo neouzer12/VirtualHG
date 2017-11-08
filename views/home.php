@@ -135,7 +135,7 @@
             var usr = $("#usr").val();
             var pwd = $("#pwd").val();
             console.log("usr = " + usr + ", pwd = " + pwd);
-            $.post("assets/php/auth.php", {
+            $.post("Auth/login", {
                 usr, pwd
             }, function(data){
                 var response = jQuery.parseJSON(data);

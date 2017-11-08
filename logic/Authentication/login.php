@@ -2,7 +2,7 @@
     if(!isset($_POST)){
         exit;
     }
-    require_once('00_database_connection.php');
+    require_once('logic/config.php');
     $username = $_POST['usr'];
     $password = hash('sha256', $_POST['pwd']);
 

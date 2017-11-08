@@ -60,7 +60,7 @@
                                     </h6>
                                     <a class="dropdown-item" href="/panel">User Panel</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="logout.php">
+                                    <a class="dropdown-item" href="Auth/logout">
                                         Logout
                                     </a>
                                 </div>
