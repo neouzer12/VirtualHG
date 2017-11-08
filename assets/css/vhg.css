@@ -1,0 +1,14 @@
+/* main{
+    padding-top: 30px;
+} */
+
+.welcome-jumbotron{
+    /* background: url('../img/welcome-jumbotron-img.jpg');
+    background-size: cover; */
+    background: rgba(255,255,255, 0.0);
+}
+
+body{
+    background: url('../img/welcome-jumbotron-img.jpg');
+    background-size: cover;
+}
