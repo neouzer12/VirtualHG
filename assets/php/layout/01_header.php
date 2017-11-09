@@ -14,53 +14,21 @@
                     <a class="nav-link" href="/aboutus">About us</a>
                 </li>
             </ul>
-            <!-- Login here
-                @if(Auth::guest())
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                </ul>
-                @else
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->usr }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <h6 class="dropdown-header">Signed in as:
-                                <b>{{ Auth::user()->usr }}</b>
-                            </h6>
-                            <a class="dropdown-item" href="/panel">User Panel</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-                
-                @endif
-            -->
             <?php
-                session_start();
-                if (isset($_SESSION['usr']) && isset($_SESSION['user_id'])){
+                if ($isLoggedIn){
                     echo '
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    ' . $_SESSION['usr'] . '
+                                    ' . $username . '
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <h6 class="dropdown-header">Signed in as:
-                                        <b>' . $_SESSION['usr'] . '</b>
+                                        <b>' . $username . '</b>
                                     </h6>
                                     <a class="dropdown-item" href="/panel">User Panel</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="Auth/logout">
+                                    <a class="dropdown-item" href="auth/logout">
                                         Logout
                                     </a>
                                 </div>
@@ -74,7 +42,7 @@
                                 <a class="nav-link" href="#loginModal" data-toggle="modal" data-target="#loginModal">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="register.php">Register</a>
+                                <a class="nav-link" href="register">Register</a>
                             </li>
                         </ul>
                     ';

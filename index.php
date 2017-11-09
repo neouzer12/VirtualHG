@@ -14,7 +14,8 @@
         if(trim($link) != '')
             array_push($routes, $link);
     }
-
+    if(empty($routes)) require 'views/home.php';
+    
     switch($routes[0]){
         case "config":
             require 'logic/config.php';
@@ -22,7 +23,7 @@
         case "home":
             require 'views/home.php';
             break;
-        case "Auth":
+        case "auth":
             $redirectTo = "logic/Authentication/";
             switch($routes[1]){
                 case "login":
@@ -31,7 +32,18 @@
                 case "logout":
                     require $redirectTo . "logout.php";
                     break;
+
             }
+            break;
+        case "register":
+            if (!empty($_POST))
+                require 'logic/Authentication/register.php';
+            else
+                require 'views/register.php';
+            break;
+        case "dashboard":
+            //echo "HELLO";
+            require 'logic/Dashboard/dashboard.php';
             break;
         default:
             echo "404 page not found!";
