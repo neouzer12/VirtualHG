@@ -1,6 +1,7 @@
 <?php
     if(!isset($_SESSION['usr']) && !isset($_SESSION['user_id'])){
         $isLoggedIn = false;
+        return;
     }
     session_start();
     $username = $_SESSION['usr'];
