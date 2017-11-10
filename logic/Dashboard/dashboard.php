@@ -24,7 +24,7 @@
                 array_push($tips, [
                     "id" => $r['id'],
                     "title" => $r['title'],
-                    // "content" => $r['content'],
+                    "content" => $r['content'],
                     "category" => $r['category'],
                     "time" => $r['tip_time'],
                 ]);

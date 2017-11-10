@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/simplemde.min.css">
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/vhg.css">
 </head>
 
@@ -87,7 +88,7 @@
                     <div class="tab-pane fade" id="ts" role="tabpanel" aria-labelledby="ts">
                         <h1 class="text-left">Tips & Suggestions</h1>
 
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -102,12 +103,18 @@
                                     $t_title = $tip['title'];
                                     $t_cat = $tip['category'];
                                     $t_time = $tip['time'];
-                                    echo "<tr><td>$t_id</td><td>$t_title</td><td>$t_cat</td><td>$t_time</td></tr>";
+                                    $t_content = $tip['content'];
+                                    echo "<tr onclick=\"launchEditTipModal($t_id, `$t_title`, `$t_content`, `$t_cat`)\">";
+                                    echo "<td>$t_id</td>";
+                                    echo "<td>$t_title</td>";
+                                    echo "<td>$t_cat</td>";
+                                    echo "<td>$t_time</td>";
+                                    echo "</tr>";
                                 }?>
                             </tbody>
                         </table>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tipEditorModal">
+                        <button type="button" class="btn btn-primary" id="addTipBtn">
                             Add new
                         </button>
                     </div>
@@ -144,20 +151,27 @@
         </div>
     </div>
 
-    
-
     <!-- Modal -->
-    <div class="modal fade" id="tipEditorModal" tabindex="-1" role="dialog" aria-labelledby="tipEditorModalLabel" aria-hidden="true">
+    <div class="modal" id="tipEditorModal" tabindex="-1" role="dialog" aria-labelledby="tipEditorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tipEditorModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="tipEditorModalLabel">Tip Editor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" class="form">
+                    <form class="form">
+                        <input type="hidden" id="t_id" value="-1">
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" class="form-control" id="tm_title">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Category</label>
+                            <input type="text" class="form-control" id="tm_cat" disabled>
+                        </div>
                         <div class="form-group">
                             <textarea name="" id="tipEditor" cols="30" rows="10"></textarea>
                         </div>
@@ -165,7 +179,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="saveTips">Save changes</button>
                 </div>
             </div>
         </div>
@@ -174,7 +188,80 @@
     <?php include_once('./assets/php/layout/02_footer.php') ?>
     <script src="./assets/js/simplemde.min.js"></script>
     <script>
-        var simplemde = new SimpleMDE({ element: $("#tipEditor")[0] });
+        var simplemde = null;
+        
+        simplemde = new SimpleMDE({
+            autoDownloadFontAwesome: false,
+            element: $("#tipEditor")[0],
+            placeholder: "Type here...",
+            hideIcons: ["side-by-side", "fullscreen", "image", ],
+        });
+
+        $( "#addTipBtn" ).click(function() {
+            simplemde.value("");
+            simplemde.toTextArea();
+            simplemde = null;
+
+            simplemde = new SimpleMDE({
+                autoDownloadFontAwesome: false,
+                element: $("#tipEditor")[0],
+                placeholder: "Type here...",
+                hideIcons: ["side-by-side", "fullscreen", "image", ],
+            });
+            $("#t_id").val("-1");
+            $("#tm_title").val("");
+            $("#tm_cat").val("");
+            
+            
+            $("#tipEditorModal").modal('show');
+            $("#tm_title").focus();
+        });
+
+        $("#saveTips").click(function() {
+            var tip_id = $("#t_id").val();
+            var tip_title = $("#tm_title").val();
+            var tip_cat = 1; //Placeholder for now.
+            var tip_content = simplemde.value();
+            
+            //console.log(tip_id + ", " + tip_title + ", " + tip_cat + ", " + tip_content);
+
+            $.post("logic/Data/tips.php", {
+                tip_id,
+                tip_title,
+                tip_cat,
+                tip_content
+            }, function(data){
+                var response = jQuery.parseJSON(data);
+                if (response.status == 0){
+                    alert("Successfully saved!");
+                    window.location.href = "dashboard"
+                }else{
+                    alert(response.message);
+                }
+            });
+        })
+
+        function launchEditTipModal(id, title, content, cat){
+            simplemde.value("");
+            simplemde.toTextArea();
+            simplemde = null;
+
+            simplemde = new SimpleMDE({
+                autoDownloadFontAwesome: false,
+                element: $("#tipEditor")[0],
+                initialValue: content,
+                placeholder: "Type here...",
+                hideIcons: ["side-by-side", "fullscreen", "image", ],
+            });
+            $("#t_id").val(id);
+            $("#tm_title").val(title);
+            $("#tm_cat").val(cat);
+            
+            // simplemde.value(content);
+            $("#tipEditorModal").modal('show');
+            $("#tm_title").focus();
+        }
+        
     </script>
 </body>
 
