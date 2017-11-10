@@ -8,6 +8,7 @@
     <title>Admin Panel | VirtualHG</title>
 
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/simplemde.min.css">
     <link rel="stylesheet" href="./assets/css/vhg.css">
 </head>
 
@@ -85,6 +86,30 @@
 
                     <div class="tab-pane fade" id="ts" role="tabpanel" aria-labelledby="ts">
                         <h1 class="text-left">Tips & Suggestions</h1>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($tips as $tip){
+                                    $t_id = $tip['id'];
+                                    $t_title = $tip['title'];
+                                    $t_cat = $tip['category'];
+                                    $t_time = $tip['time'];
+                                    echo "<tr><td>$t_id</td><td>$t_title</td><td>$t_cat</td><td>$t_time</td></tr>";
+                                }?>
+                            </tbody>
+                        </table>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tipEditorModal">
+                            Add new
+                        </button>
                     </div>
 
                     <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users">
@@ -119,8 +144,38 @@
         </div>
     </div>
 
-    <?php include_once('./assets/php/layout/02_footer.php') ?>
+    
 
+    <!-- Modal -->
+    <div class="modal fade" id="tipEditorModal" tabindex="-1" role="dialog" aria-labelledby="tipEditorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipEditorModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form">
+                        <div class="form-group">
+                            <textarea name="" id="tipEditor" cols="30" rows="10"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php include_once('./assets/php/layout/02_footer.php') ?>
+    <script src="./assets/js/simplemde.min.js"></script>
+    <script>
+        var simplemde = new SimpleMDE({ element: $("#tipEditor")[0] });
+    </script>
 </body>
 
 </html>

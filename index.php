@@ -14,12 +14,9 @@
         if(trim($link) != '')
             array_push($routes, $link);
     }
-    if(empty($routes)) require 'views/home.php';
+    if(empty($routes)){require 'views/home.php';return;}
     
     switch($routes[0]){
-        case "config":
-            require 'logic/config.php';
-            break;
         case "home":
             require 'views/home.php';
             break;
@@ -42,7 +39,6 @@
                 require 'views/register.php';
             break;
         case "dashboard":
-            //echo "HELLO";
             require 'logic/Dashboard/dashboard.php';
             break;
         default:
