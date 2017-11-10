@@ -83,6 +83,28 @@
 
                     <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category">
                         <h1 class="text-left">Category</h1>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Category Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($categories as $category){
+                                    $c_id = $category['id'];
+                                    $c_name = $category['category'];
+                                    echo "<tr onclick=\"launchEditCatModal($c_id, `$c_name`)\">";
+                                    echo "<td>$c_id</td>";
+                                    echo "<td>$c_name</td>";
+                                    echo "</tr>";
+                                }?>
+                            </tbody>
+                        </table>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" id="addCatBtn">
+                            Add new
+                        </button>
                     </div>
 
                     <div class="tab-pane fade" id="ts" role="tabpanel" aria-labelledby="ts">
